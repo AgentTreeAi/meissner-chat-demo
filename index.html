@@ -13,12 +13,16 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            /* Desktop background - original screenshot */
             background-image: url('meissner-screenshot.png');
             background-size: cover;
             background-position: left center;
             background-repeat: no-repeat;
-            background-attachment: fixed;
+            background-attachment: scroll;
             min-height: 100vh;
+            min-height: 100dvh;
+            /* Smooth transition for background changes */
+            transition: background-image 0.3s ease;
         }
 
         /* ========================================
@@ -41,7 +45,9 @@
             --toggle-size: 60px;               /* Chat button size */
             
             /* 📱 MOBILE SIZES */
-            --mobile-padding: 20px;            /* Mobile screen padding */
+            --mobile-padding: 15px;            /* Mobile screen padding */
+            --mobile-toggle-size: 56px;        /* Mobile chat button size */
+            --mobile-touch-target: 44px;       /* Minimum touch target size */
         }
 
         /* ========================================
@@ -69,6 +75,10 @@
             justify-content: center;
             transition: all 0.3s ease;
             position: relative;
+            /* Enhanced touch interaction */
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            user-select: none;
         }
 
         .chat-toggle:hover {
@@ -225,6 +235,10 @@
             padding: 20px;
             overflow-y: auto;
             background: var(--background-light);
+            /* Enhanced scrolling performance */
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+            overscroll-behavior: contain;
         }
 
         .message {
@@ -313,6 +327,12 @@
             transition: border-color 0.2s;
             color: var(--text-dark);
             overflow-y: hidden;
+            /* Enhanced mobile input handling */
+            -webkit-appearance: none;
+            -webkit-border-radius: 20px;
+            border-radius: 20px;
+            background-color: white;
+            outline: none;
         }
 
         .input-container textarea:focus {
@@ -336,6 +356,11 @@
             align-items: center;
             justify-content: center;
             transition: all 0.2s;
+            /* Enhanced touch interaction */
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            user-select: none;
+            flex-shrink: 0;
         }
 
         .send-button:hover {
@@ -402,19 +427,140 @@
         }
 
         /* ========================================
-           MOBILE RESPONSIVE
+           MOBILE RESPONSIVE - ENHANCED
         ======================================== */
         @media (max-width: 768px) {
+            body {
+                /* Mobile-optimized background image */
+                background-image: url('meissner-mobile-screenshot.png');
+                background-attachment: scroll;
+                background-position: center top;
+                background-size: cover;
+            }
+            
             .chat-widget {
-                bottom: var(--mobile-padding);
-                right: var(--mobile-padding);
+                bottom: 15px; /* Reduced padding for more screen space */
+                right: 15px;
+                left: 15px; /* Add left constraint */
             }
             
             .chat-window {
-                width: calc(100vw - calc(var(--mobile-padding) * 2));
-                height: calc(100vh - 120px);
-                bottom: calc(var(--toggle-size) + var(--mobile-padding));
+                width: calc(100vw - 30px); /* Simplified calculation */
+                height: calc(100vh - 100px);
+                height: calc(100dvh - 100px); /* Use dynamic viewport height */
+                max-height: calc(100vh - 100px);
+                max-height: calc(100dvh - 100px);
+                bottom: calc(var(--toggle-size) + 20px);
                 right: 0;
+                left: 0;
+                margin: 0 auto;
+                position: fixed; /* Ensure it's properly positioned */
+            }
+            
+            /* Optimize toggle button for touch */
+            .chat-toggle {
+                width: 56px; /* Slightly smaller but still touch-friendly */
+                height: 56px;
+                box-shadow: 0 4px 16px rgba(0, 168, 230, 0.4); /* Enhanced shadow for visibility */
+            }
+            
+            /* Optimize header for mobile */
+            .chat-header {
+                padding: 16px 20px; /* Slightly reduced padding */
+            }
+            
+            .chat-header .logo {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .chat-header .logo img {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .chat-header .info h3 {
+                font-size: 15px; /* Slightly smaller for mobile */
+            }
+            
+            .chat-header .info p {
+                font-size: 12px;
+            }
+            
+            /* Optimize messages for mobile */
+            .chat-messages {
+                padding: 15px; /* Reduced padding */
+            }
+            
+            .message.assistant .content,
+            .message.user .content {
+                max-width: 90%; /* Allow more width on mobile */
+                font-size: 14px;
+                line-height: 1.5; /* Improved readability */
+                padding: 10px 14px; /* Slightly adjusted padding */
+            }
+            
+            /* Optimize input area for mobile */
+            .chat-input {
+                padding: 15px; /* Reduced padding */
+            }
+            
+            .input-container textarea {
+                font-size: 16px; /* Prevent zoom on iOS */
+                min-height: 44px; /* iOS recommended touch target */
+                padding: 12px 16px;
+            }
+            
+            .send-button {
+                width: 44px; /* iOS recommended touch target */
+                height: 44px;
+                flex-shrink: 0; /* Prevent shrinking */
+            }
+        }
+        
+        /* ========================================
+           SMALL MOBILE DEVICES (iPhone SE, etc.)
+        ======================================== */
+        @media (max-width: 480px) {
+            .chat-widget {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+            }
+            
+            .chat-window {
+                width: calc(100vw - 20px);
+                height: calc(100vh - 80px);
+                height: calc(100dvh - 80px);
+                max-height: calc(100vh - 80px);
+                max-height: calc(100dvh - 80px);
+                bottom: calc(var(--toggle-size) + 15px);
+            }
+            
+            .chat-messages {
+                padding: 12px;
+            }
+            
+            .message.assistant .content,
+            .message.user .content {
+                font-size: 13px;
+                padding: 9px 12px;
+            }
+            
+            .chat-input {
+                padding: 12px;
+            }
+        }
+        
+        /* ========================================
+           LANDSCAPE MOBILE ORIENTATION
+        ======================================== */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .chat-window {
+                height: calc(100vh - 60px);
+                height: calc(100dvh - 60px);
+                max-height: calc(100vh - 60px);
+                max-height: calc(100dvh - 60px);
             }
         }
 
@@ -430,6 +576,35 @@
         .chat-messages::-webkit-scrollbar-thumb {
             background: #c1c1c1;
             border-radius: 3px;
+        }
+        
+        /* Hide scrollbar on mobile for cleaner look */
+        @media (max-width: 768px) {
+            .chat-messages::-webkit-scrollbar {
+                width: 3px;
+            }
+        }
+        
+        /* ========================================
+           DEVICE-SPECIFIC BACKGROUND CLASSES
+        ======================================== */
+        .mobile-device {
+            /* Additional mobile-specific styling */
+            background-attachment: scroll !important;
+            background-position: center top !important;
+        }
+        
+        .desktop-device {
+            /* Additional desktop-specific styling */
+            background-position: left center !important;
+        }
+        
+        /* Enhanced media query fallback */
+        @media (max-width: 768px) and (pointer: coarse) {
+            /* Specifically target touch devices */
+            body {
+                background-image: url('meissner-mobile-screenshot.png') !important;
+            }
         }
 
         /* ========================================
@@ -643,12 +818,15 @@
                     }
                 });
 
-                // Close on outside click
+                // Close on outside click (but not on mobile when keyboard is open)
                 document.addEventListener('click', (e) => {
-                    if (!e.target.closest('.chat-widget') && this.isOpen) {
+                    if (!e.target.closest('.chat-widget') && this.isOpen && !this.isMobileKeyboardOpen()) {
                         this.closeChat();
                     }
                 });
+
+                // Mobile keyboard handling
+                this.setupMobileKeyboardHandling();
 
                 // Show notification after delay
                 setTimeout(() => this.showNotificationBadge(), 3000);
@@ -666,8 +844,17 @@
                 this.isOpen = true;
                 this.chatWindow.classList.add('active');
                 this.chatToggle.classList.add('active');
-                this.messageInput.focus();
-                this.scrollToBottom();
+                
+                // Focus input with slight delay on mobile to ensure proper rendering
+                if (this.isMobile()) {
+                    setTimeout(() => {
+                        this.messageInput.focus();
+                        this.scrollToBottom();
+                    }, 150);
+                } else {
+                    this.messageInput.focus();
+                    this.scrollToBottom();
+                }
             }
 
             closeChat() {
@@ -864,6 +1051,61 @@
                 this.notificationBadge.style.display = 'flex';
             }
 
+            // Mobile keyboard handling
+            setupMobileKeyboardHandling() {
+                if (!this.isMobile()) return;
+                
+                let initialViewportHeight = window.innerHeight;
+                
+                // Handle viewport resize (keyboard open/close)
+                window.addEventListener('resize', () => {
+                    const currentHeight = window.innerHeight;
+                    const heightDifference = initialViewportHeight - currentHeight;
+                    
+                    // If height reduced significantly, keyboard is likely open
+                    if (heightDifference > 150) {
+                        this.adjustForKeyboard(true);
+                    } else {
+                        this.adjustForKeyboard(false);
+                    }
+                });
+                
+                // Handle focus events
+                this.messageInput.addEventListener('focus', () => {
+                    setTimeout(() => this.adjustForKeyboard(true), 300);
+                });
+                
+                this.messageInput.addEventListener('blur', () => {
+                    setTimeout(() => this.adjustForKeyboard(false), 300);
+                });
+            }
+            
+            adjustForKeyboard(keyboardOpen) {
+                if (!this.isOpen) return;
+                
+                const chatWindow = this.chatWindow;
+                if (keyboardOpen) {
+                    chatWindow.style.height = '60vh';
+                    chatWindow.style.maxHeight = '60vh';
+                } else {
+                    chatWindow.style.height = '';
+                    chatWindow.style.maxHeight = '';
+                }
+                
+                // Always scroll to bottom after adjustment
+                setTimeout(() => this.scrollToBottom(), 100);
+            }
+            
+            isMobile() {
+                return window.innerWidth <= 768;
+            }
+            
+            isMobileKeyboardOpen() {
+                if (!this.isMobile()) return false;
+                const heightDifference = window.screen.height - window.innerHeight;
+                return heightDifference > 150;
+            }
+
             // Session management for conversation tracking
             getSessionId() {
                 let sessionId = localStorage.getItem('chatSessionId');
@@ -876,9 +1118,56 @@
         }
 
         // ========================================
-        // 🚀 INITIALIZE CHAT WIDGET
+        // 📱 DEVICE DETECTION & BACKGROUND SWITCHING
+        // ========================================
+        class DeviceDetector {
+            static isMobileDevice() {
+                // Multiple detection methods for better accuracy
+                const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+                const userAgentMobile = mobileRegex.test(navigator.userAgent);
+                const screenSizeMobile = window.innerWidth <= 768;
+                const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+                
+                return userAgentMobile || (screenSizeMobile && hasTouchScreen);
+            }
+            
+            static setAppropriateBackground() {
+                const body = document.body;
+                
+                if (this.isMobileDevice()) {
+                    body.style.backgroundImage = "url('meissner-mobile-screenshot.png')";
+                    body.style.backgroundPosition = 'center top';
+                    body.classList.add('mobile-device');
+                } else {
+                    body.style.backgroundImage = "url('meissner-screenshot.png')";
+                    body.style.backgroundPosition = 'left center';
+                    body.classList.add('desktop-device');
+                }
+            }
+            
+            static init() {
+                // Set initial background
+                this.setAppropriateBackground();
+                
+                // Handle window resize (orientation changes, etc.)
+                window.addEventListener('resize', () => {
+                    // Debounce resize events
+                    clearTimeout(this.resizeTimeout);
+                    this.resizeTimeout = setTimeout(() => {
+                        this.setAppropriateBackground();
+                    }, 250);
+                });
+            }
+        }
+
+        // ========================================
+        // 🚀 INITIALIZE CHAT WIDGET & DEVICE DETECTION
         // ========================================
         document.addEventListener('DOMContentLoaded', () => {
+            // Initialize device detection first
+            DeviceDetector.init();
+            
+            // Then initialize chat widget
             new MeissnerChatWidget();
         });
     </script>
