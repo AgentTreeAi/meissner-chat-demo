@@ -122,14 +122,14 @@
             animation: pulse 2s infinite;
         }
         
-        /* Smaller notification badge for mobile */
+        /* Appropriately sized notification badge for mobile */
         @media (max-width: 768px) {
             .notification-badge {
-                width: 16px;
-                height: 16px;
-                font-size: 10px;
-                top: -3px;
-                right: -3px;
+                width: 20px; /* Restored to standard size for larger button */
+                height: 20px;
+                font-size: 12px;
+                top: -5px;
+                right: -5px;
             }
         }
 
@@ -461,23 +461,23 @@
                 height: calc(100dvh - 100px); /* Use dynamic viewport height */
                 max-height: calc(100vh - 100px);
                 max-height: calc(100dvh - 100px);
-                bottom: calc(28px + 20px); /* Adjusted for smaller button size */
+                bottom: calc(56px + 20px); /* Adjusted for larger button size */
                 right: 0; /* Align with right side like the toggle button */
                 /* Removed left/margin auto to keep right-aligned */
                 position: fixed; /* Ensure it's properly positioned */
             }
             
-            /* Optimize toggle button for touch - 50% smaller on mobile */
+            /* Optimize toggle button for touch - 100% larger than previous mobile size */
             .chat-toggle {
-                width: 28px; /* 50% reduction from 56px */
-                height: 28px; /* 50% reduction from 56px */
-                box-shadow: 0 2px 8px rgba(0, 168, 230, 0.4); /* Proportionally smaller shadow */
+                width: 56px; /* 100% increase from 28px */
+                height: 56px; /* 100% increase from 28px */
+                box-shadow: 0 4px 16px rgba(0, 168, 230, 0.4); /* Enhanced shadow for larger button */
             }
             
-            /* Adjust icon size for smaller button */
+            /* Adjust icon size for larger button */
             .chat-toggle svg {
-                width: 16px; /* Reduced from 28px to fit smaller button */
-                height: 16px;
+                width: 28px; /* Increased from 16px to fit larger button */
+                height: 28px;
             }
             
             /* Optimize header for mobile */
@@ -550,7 +550,7 @@
                 height: calc(100dvh - 80px);
                 max-height: calc(100vh - 80px);
                 max-height: calc(100dvh - 80px);
-                bottom: calc(28px + 15px); /* Adjusted for smaller button */
+                bottom: calc(56px + 15px); /* Adjusted for larger button */
                 right: 0; /* Keep aligned to right */
             }
             
