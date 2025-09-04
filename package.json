@@ -1,0 +1,27 @@
+{
+  "name": "meissner-chat-demo",
+  "version": "1.0.0",
+  "description": "Meissner AI Chat Widget Demo",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js",
+    "build": "echo 'No build step required for static site'",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "chat",
+    "widget",
+    "ai",
+    "meissner",
+    "demo"
+  ],
+  "author": "Meissner",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "compression": "^1.7.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
